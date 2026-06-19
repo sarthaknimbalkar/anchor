@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+  <rect width="760" height="360" fill="#0d1117"/>
+  <text x="24" y="34" fill="#e6edf3" font-size="17" font-weight="700">Rule adherence after a later, conflicting instruction</text>
+  <text x="24" y="55" fill="#8b949e" font-size="12">rule stated once (like CLAUDE.md) vs re-injected every turn | gemma4-8B | higher is better</text>
+
+  <line x1="120" y1="86" x2="120" y2="296" stroke="#30363d"/>
+  <line x1="120" y1="296" x2="720" y2="296" stroke="#30363d"/>
+  <g fill="#8b949e" font-size="10" text-anchor="end">
+    <text x="112" y="300">0%</text>
+    <text x="112" y="244">25%</text><line x1="120" y1="244" x2="720" y2="244" stroke="#21262d"/>
+    <text x="112" y="191">50%</text><line x1="120" y1="191" x2="720" y2="191" stroke="#21262d"/>
+    <text x="112" y="139">75%</text><line x1="120" y1="139" x2="720" y2="139" stroke="#21262d"/>
+    <text x="112" y="90">100%</text><line x1="120" y1="86" x2="720" y2="86" stroke="#21262d"/>
+  </g>
+
+  <!-- scale: 100% = 210px, y0=296 -->
+  <!-- group 1: ~5-11k context -->
+  <rect x="200" y="293" width="70" height="3" fill="#f85149"/>
+  <text x="235" y="286" fill="#f85149" font-size="13" font-weight="700" text-anchor="middle">0%</text>
+  <rect x="290" y="86" width="70" height="210" fill="#3fb950"/>
+  <text x="325" y="78" fill="#3fb950" font-size="13" font-weight="700" text-anchor="middle">100%</text>
+  <text x="280" y="318" fill="#e6edf3" font-size="12" text-anchor="middle">~5-11k tokens (4 seeds)</text>
+
+  <!-- group 2: ~57k context -->
+  <rect x="460" y="293" width="70" height="3" fill="#f85149"/>
+  <text x="495" y="286" fill="#f85149" font-size="13" font-weight="700" text-anchor="middle">0%</text>
+  <rect x="550" y="86" width="70" height="210" fill="#3fb950"/>
+  <text x="585" y="78" fill="#3fb950" font-size="13" font-weight="700" text-anchor="middle">100%</text>
+  <text x="540" y="318" fill="#e6edf3" font-size="12" text-anchor="middle">~57k tokens (rule buried deep)</text>
+
+  <rect x="200" y="334" width="12" height="12" fill="#f85149"/>
+  <text x="218" y="344" fill="#8b949e" font-size="11">CLAUDE.md (stated once, gets buried)</text>
+  <rect x="470" y="334" width="12" height="12" fill="#3fb950"/>
+  <text x="488" y="344" fill="#8b949e" font-size="11">Anchor re-inject (recency, every turn)</text>
+</svg>

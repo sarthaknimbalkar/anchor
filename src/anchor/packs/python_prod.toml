@@ -1,0 +1,18 @@
+schema = 1
+
+[[rule]]
+id = "no-prod-env-edit"
+tier = "block"
+text = "Never edit production env files."
+protects_paths = ["**/.env.production", "/etc/**"]
+
+[[rule]]
+id = "no-pip-system"
+tier = "block"
+text = "Never pip install into the system interpreter; use a venv."
+blocks_command_containing = ["sudo pip install", "pip install --break-system-packages"]
+
+[[rule]]
+id = "run-tests"
+tier = "remind"
+text = "Run the test suite before claiming a change works."

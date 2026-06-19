@@ -1,0 +1,18 @@
+schema = 1
+
+[[rule]]
+id = "no-force-push"
+tier = "block"
+text = "Never force-push."
+blocks_command_containing = ["git push --force", "git push -f"]
+
+[[rule]]
+id = "no-skip-hooks"
+tier = "block"
+text = "Never bypass git hooks."
+blocks_command_containing = ["--no-verify"]
+
+[[rule]]
+id = "atomic-commits"
+tier = "remind"
+text = "Commit once per logical change with a clear message."

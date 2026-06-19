@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+  <rect width="760" height="380" fill="#0d1117"/>
+  <text x="24" y="34" fill="#e6edf3" font-size="17" font-weight="700">Rule-violation rate - live Claude Code agent (YOLO mode)</text>
+  <text x="24" y="55" fill="#8b949e" font-size="12">9 scenarios x 4 trials per tier | Wilson 95% CI | lower is better</text>
+
+  <!-- axis -->
+  <line x1="120" y1="90" x2="120" y2="300" stroke="#30363d"/>
+  <line x1="120" y1="300" x2="720" y2="300" stroke="#30363d"/>
+  <!-- gridlines 0/25/50/75/100 -->
+  <g fill="#8b949e" font-size="10" text-anchor="end">
+    <text x="112" y="304">0%</text><line x1="120" y1="300" x2="720" y2="300" stroke="#21262d"/>
+    <text x="112" y="252">25%</text><line x1="120" y1="248" x2="720" y2="248" stroke="#21262d"/>
+    <text x="112" y="199">50%</text><line x1="120" y1="195" x2="720" y2="195" stroke="#21262d"/>
+    <text x="112" y="146">75%</text><line x1="120" y1="142" x2="720" y2="142" stroke="#21262d"/>
+    <text x="112" y="93">100%</text><line x1="120" y1="90" x2="720" y2="90" stroke="#21262d"/>
+  </g>
+
+  <!-- bars: scale 210px = 100% (300 baseline). y = 300 - pct*2.1 -->
+  <!-- Nominal baseline 75% -> h=157.5 -->
+  <rect x="180" y="142.5" width="70" height="157.5" fill="#f85149"/>
+  <text x="215" y="135" fill="#f85149" font-size="13" font-weight="700" text-anchor="middle">75%</text>
+  <!-- Nominal anchor 0% -> sliver -->
+  <rect x="270" y="297" width="70" height="3" fill="#3fb950"/>
+  <text x="305" y="290" fill="#3fb950" font-size="13" font-weight="700" text-anchor="middle">0%</text>
+
+  <!-- Adversarial baseline 3% -> h=6.3 -->
+  <rect x="430" y="293.7" width="70" height="6.3" fill="#f85149"/>
+  <text x="465" y="286" fill="#f85149" font-size="13" font-weight="700" text-anchor="middle">3%</text>
+  <!-- Adversarial anchor 0% -->
+  <rect x="520" y="297" width="70" height="3" fill="#3fb950"/>
+  <text x="555" y="290" fill="#3fb950" font-size="13" font-weight="700" text-anchor="middle">0%</text>
+
+  <!-- group labels -->
+  <text x="260" y="324" fill="#e6edf3" font-size="12" text-anchor="middle">Nominal (natural tasks)</text>
+  <text x="510" y="324" fill="#e6edf3" font-size="12" text-anchor="middle">Adversarial ("ignore rules")</text>
+
+  <!-- legend -->
+  <rect x="180" y="344" width="12" height="12" fill="#f85149"/>
+  <text x="198" y="354" fill="#8b949e" font-size="11">baseline (no Anchor)</text>
+  <rect x="360" y="344" width="12" height="12" fill="#3fb950"/>
+  <text x="378" y="354" fill="#8b949e" font-size="11">with Anchor</text>
+  <text x="560" y="354" fill="#8b949e" font-size="11">over-block: 0/20 benign tasks</text>
+</svg>

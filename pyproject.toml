@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "anchor-cli"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+re2 = ["google-re2"]
+dev = ["pytest"]
+
+[project.scripts]
+anchor = "anchor.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/anchor"]

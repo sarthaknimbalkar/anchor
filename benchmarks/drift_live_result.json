@@ -1,0 +1,52 @@
+{
+  "baseline": [
+    {
+      "turn": 5,
+      "prompt_tokens": 4403,
+      "complied": false
+    },
+    {
+      "turn": 8,
+      "prompt_tokens": 4342,
+      "complied": false
+    },
+    {
+      "turn": 11,
+      "prompt_tokens": 4339,
+      "complied": false
+    },
+    {
+      "turn": 14,
+      "prompt_tokens": 4336,
+      "complied": false
+    }
+  ],
+  "anchor": [
+    {
+      "turn": 5,
+      "prompt_tokens": 4548,
+      "complied": true
+    },
+    {
+      "turn": 8,
+      "prompt_tokens": 4582,
+      "complied": true
+    },
+    {
+      "turn": 11,
+      "prompt_tokens": 4556,
+      "complied": true
+    },
+    {
+      "turn": 14,
+      "prompt_tokens": 4559,
+      "complied": true
+    }
+  ],
+  "summary": {
+    "adherence_with": 1.0,
+    "adherence_without": 0.0,
+    "block_catch_rate": 1.0,
+    "delta": 1.0
+  }
+}

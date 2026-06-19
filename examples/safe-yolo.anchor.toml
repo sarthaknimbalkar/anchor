@@ -1,0 +1,32 @@
+schema = 1
+
+[[rule]]
+id = "no-rm-recursive"
+tier = "block"
+text = "Never run destructive recursive deletes (rm -r / -rf / -R / --recursive, any flag order)."
+# Regex catches rm with any recursive flag combination, defeating rm -rf -> rm -r evasion.
+blocks_command_matching = "\\brm\\s+(-[a-zA-Z]*[rR][a-zA-Z]*|--recursive)"
+
+[[rule]]
+id = "no-tree-delete"
+tier = "block"
+text = "Never bulk-delete via find/rmdir tricks."
+blocks_command_containing = ["find . -delete", "find . -exec rm", "rmdir /s"]
+
+[[rule]]
+id = "no-force-push"
+tier = "block"
+text = "Never force-push (any flag form)."
+blocks_command_matching = "git\\s+push\\s+.*(--force|-f|--force-with-lease)"
+
+[[rule]]
+id = "protect-env"
+tier = "block"
+text = "Never edit environment/secret files."
+protects_paths = ["**/.env", "**/.env.*", "/etc/**"]
+
+[[rule]]
+id = "protect-anchor-config"
+tier = "block"
+text = "Never modify Anchor's own config or settings.json (self-protection)."
+protects_paths = ["**/.anchor.toml", "**/.anchor.local.toml", "**/.anchor/**", "**/settings.json"]
