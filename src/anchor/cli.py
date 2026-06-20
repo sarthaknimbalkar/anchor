@@ -169,8 +169,41 @@ def _cmd_doctor(args) -> int:
     files = _discover()
     print(f"  rule files discovered: {len(files)}")
     print(f"  project trusted: {_project_trusted(files)}")
+    from anchor import control
+
+    home = os.path.expanduser("~")
+    remaining = control.pause_remaining(home)
     if os.environ.get("ANCHOR_DISABLE"):
         print("  WARNING: ANCHOR_DISABLE is set - enforcement is OFF.")
+    if remaining > 0:
+        print(f"  WARNING: Anchor is PAUSED (~{int(remaining)}s left) - enforcement is OFF.")
+    skip = control.disabled_rule_ids(os.environ)
+    if skip:
+        print(f"  NOTE: rules skipped via ANCHOR_DISABLE_RULE: {', '.join(sorted(skip))}")
+    if not (os.environ.get('ANCHOR_DISABLE') or remaining > 0):
+        print("  enforcement: ON")
+    return 0
+
+
+def _cmd_pause(args) -> int:
+    from anchor import control
+
+    try:
+        secs = control.parse_duration(args.duration)
+    except ValueError as e:
+        print(f"Invalid duration {args.duration!r}: {e}", file=sys.stderr)
+        return 1
+    control.pause(os.path.expanduser("~"), secs)
+    print(f"Anchor paused for {args.duration}. Enforcement is OFF until it expires.")
+    print("Run 'anchor resume' to re-enable immediately.")
+    return 0
+
+
+def _cmd_resume(args) -> int:
+    from anchor import control
+
+    control.resume(os.path.expanduser("~"))
+    print("Anchor resumed. Enforcement is ON.")
     return 0
 
 
@@ -281,6 +314,11 @@ def main(argv=None) -> int:
     sub.add_parser("lint").set_defaults(fn=_cmd_lint)
     sub.add_parser("list").set_defaults(fn=_cmd_list)
     sub.add_parser("doctor").set_defaults(fn=_cmd_doctor)
+
+    pp = sub.add_parser("pause")
+    pp.add_argument("duration", help="e.g. 30m, 2h, 45s, 1d")
+    pp.set_defaults(fn=_cmd_pause)
+    sub.add_parser("resume").set_defaults(fn=_cmd_resume)
 
     pc = sub.add_parser("check")
     pc.add_argument("prompt", nargs="?", default="")

@@ -136,7 +136,8 @@ See [`examples/`](examples/) for ready-to-use packs.
 | `anchor add` / `import-ruler` / `export-ruler` | Author a rule / interop with [Ruler](https://github.com/intellectronica/ruler). |
 | `anchor trust` | Trust the current project's `.anchor.toml`. |
 | `anchor lint` / `list` / `doctor` | Validate rules / show effective rules + scope / health check. |
-| `anchor pause 30m` / `uninstall` / `migrate` | Time-boxed disable / clean removal / schema upgrade. |
+| `anchor pause 30m` / `anchor resume` | Time-boxed disable (s/m/h/d) / re-enable immediately. |
+| `anchor uninstall` / `migrate` | Clean removal (restores backup) / schema upgrade. |
 | `anchor bench perf` | Measure `PreToolUse` guard latency (gate: p95 < 40 ms). |
 
 ---
@@ -148,7 +149,10 @@ See [`examples/`](examples/) for ready-to-use packs.
 - **A cloned repo can't disarm you** - a project `.anchor.toml` may *add* or *strengthen* rules but
   never weaken or disable your global rules, and is **inert until `anchor trust`**.
 - **Reversible** - `anchor uninstall` removes only Anchor's hooks and restores the backup.
-- **Never bricked** - `anchor pause 30m`, or `ANCHOR_DISABLE_RULE=<id>`.
+- **Never bricked** - `anchor pause 30m` (then `anchor resume`), `ANCHOR_DISABLE_RULE=<id1,id2>` to skip
+  specific rules, or `ANCHOR_DISABLE=1` as a full kill switch. All are honored in the enforcement path.
+- **Audit is opt-in** - set `ANCHOR_AUDIT=metadata-only|redacted|full` to log blocks to `~/.anchor/log.jsonl`
+  (default `off` - no local logging, no telemetry). `full` enables `anchor add --from-log`.
 
 ### Honest scope
 

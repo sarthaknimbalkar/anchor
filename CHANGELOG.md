@@ -16,7 +16,22 @@ All notable changes to Anchor. Format loosely follows [Keep a Changelog](https:/
 - **Benchmarks** - live violation-prevention 2x2 on the real Claude Code CLI (nominal + adversarial,
   Wilson 95% CIs) and a live instruction-drift study on local models.
 
-### Fixed (found by live benchmarking)
+### Fixed (found by live dogfooding / code audit)
+- **"Never bricked" guarantee was non-functional.** The enforcement path never honored any disable
+  mechanism: `anchor pause` did not exist, `ANCHOR_DISABLE_RULE` was unimplemented, and `ANCHOR_DISABLE`
+  was only *printed* by `doctor` while `guard.evaluate` still blocked. Added `anchor pause <30m|2h|…>` /
+  `anchor resume`, a shared `control` chokepoint honored by both the daemon and the self-execute
+  fallback, `ANCHOR_DISABLE` (kill switch) and `ANCHOR_DISABLE_RULE=id1,id2` (skip specific rules), with
+  fail-safe semantics (a corrupt pause file never disables enforcement). `doctor` now reports true state.
+- **Re-injection starved `remind` rules.** `budget.select` packed `block` rules first into a 120-token
+  budget, so a realistic constitution's behavioral rules were dropped from injection entirely — even
+  though block rules are already hard-enforced and need re-injection least. Reminders are now prioritized
+  (block rules fill the remainder); default budget raised to 500.
+- **Audit log was never written.** `audit.log_event` had no caller, so `~/.anchor/log.jsonl` never
+  existed and `anchor add --from-log` always failed. Block decisions are now logged when opt-in
+  `ANCHOR_AUDIT` is set (`metadata-only|redacted|full`; default `off`).
+- Removed dead code in `daemon.py` (`_files_and_hash`, unused `DecisionCache` field, misleading
+  "in-memory cache" docstring).
 - `init` now pins an absolute interpreter path; a bare `anchor` command could silently fail to run
   (leaving the user unprotected) when the install dir wasn't on Claude Code's `PATH`.
 - `rm -rf <bare-dir>` evasion - bare directory tokens that exist on disk are now treated as paths.

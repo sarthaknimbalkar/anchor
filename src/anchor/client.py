@@ -1,11 +1,16 @@
 import os
 import socket
 import sys
-from anchor import ipc, protocol, guard
+from anchor import ipc, protocol, guard, control
 
 
 def decide(hook_input: dict, *, home: str | None = None) -> dict:
     home = home or os.path.expanduser("~")
+    # Honor the kill-switch / pause here too: the hook process has a FRESH
+    # environment, so an env disable is seen even when a long-lived daemon
+    # (started earlier with a stale env) would otherwise serve the decision.
+    if control.enforcement_disabled(home, os.environ):
+        return {}
     try:
         cookie = ipc.get_or_create_cookie(home)
         addr = ipc.socket_address(home)

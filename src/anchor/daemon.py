@@ -1,22 +1,14 @@
 import os
 import socket
 import sys
-from anchor import guard, discovery, cache, ipc, protocol
-
-
-def _files_and_hash(cwd: str, home: str):
-    files = discovery.discover_files(cwd, home)
-    h = cache.content_hash([p for p, _ in files])
-    return files, h
+from anchor import guard, ipc, protocol
 
 
 class DecisionCache:
-    def __init__(self):
-        self._index_by_key: dict = {}
-
     def decide(self, hook_input: dict) -> dict:
-        # Delegate to guard.evaluate for guaranteed parity with the fallback path.
-        # The in-memory cache below is a speed-up that does not change the decision.
+        # Delegate to guard.evaluate so the daemon and the self-execute fallback
+        # always reach an identical decision (including the kill-switch/pause and
+        # ANCHOR_DISABLE_RULE handling inside guard.evaluate).
         return guard.evaluate(hook_input)
 
 

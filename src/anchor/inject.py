@@ -2,7 +2,7 @@ import sys
 from anchor.budget import select
 
 
-def render(rules, budget_tokens: int = 120) -> str:
+def render(rules, budget_tokens: int = 500) -> str:
     if not rules:
         return ""
     selected, _ = select(rules, budget_tokens)
